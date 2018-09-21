@@ -1,0 +1,175 @@
+<view class="container" disable-scroll="true">
+  <view class="game-body">
+    <loading hidden="{{hidden}}">
+      加载中...
+    </loading>
+    <!--<view class="heading">
+      <view class="scores-container">
+        <view class="score-container">{{score}}</view>
+        <view class="best-container">{{highscore}}</view>
+      </view>
+    </view>-->
+    <view class="game-nav" wx:if="{{enabled==true}}">
+      <view class="game-nav-list">
+        <view class="game-nav-tl">
+          <view class="game-big">2048</view>
+          <view class="game-small">数字方块</view>
+
+
+        </view>
+        <view class="game-score-box">
+          <view class="game-score-pad clearfix">
+            <view class="score-container game-score-item">{{score}}</view>
+            <view class="best-container game-score-item ml-6">{{highscore}}</view>
+          </view>
+          <view class="above-game game-button-list clearfix">
+            <button class="share-button game-btns" open-type="share">分享</button>
+             <view class="restart-button game-btns ml-6" bindtap="rank">排行榜</view>
+            <view class="restart-button game-btns ml-6" bindtap="restart">重新开始</view>
+          </view>
+        </view>
+      </view>
+      <view class="game-intro game-beizhu">合并这些数字方块，你能拿到2048吗？</view>
+    </view>
+
+    <view class="game-container" catchtap="tuodong" bindtouchstart='tuodong' catchtouchmove='tuodong' bindtouchend='tuodong' wx:if="{{enabled==true}}">
+      <view class="game-message game-{{over ? (win ? 'won' : 'over') : ''}}">
+        <text class="over-msg">{{overMsg}}</text>
+        <view class="lower">
+          <!-- <text class="keep-playing-button">继续</text> -->
+          <view class="retry-button" catchtap="restart">再试一次</view>
+        </view>
+      </view>
+
+      <view class="grid-container" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+        <view wx:for="{{grids}}" wx:for-index="rowIdx" wx:for-item="row" class="grid-row">
+          <view wx:for="{{row}}" wx:for-index="colIdx" wx:for-item="cell" class="grid-cell">
+            <view class="tile tile-{{cell.value}}">
+              <view wx:if="{{cell}}" class="tile-inner">
+                {{cell.value}}
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+    <view class="line10" wx:if="{{1==0}}"></view>
+    <!--排行榜 start-->
+    <view class="block-one" wx:if="{{1==0}}">
+      <view class="block-box">
+        <!--<view class="block-one-title">
+      <view class="dati-state">本期未开始</view>
+      <view class="dati-persong">共{{next.bonus||800}}人参与</view>
+    </view>
+    <view class="block-one-list clearfix">
+    	<view class="block-one-item">
+        	<view class="block-one-bt">当前最高分</view>
+            <view class="block-one-num">{{next.userCount||982.92}}<text>分</text></view>
+        </view>
+        <view class="block-one-item">
+        	<view class="block-one-bt">开始时间</view>
+            <view class="block-one-num">{{next.beginHHmm||'11:00'}}</view>
+        </view>
+    </view>
+    <view class="dati-sm">当前共有{{next.bonus||800}}人参加挑战</view>
+    <view catchtap='goToUrl' data-url="dati" class="canyu-btn">
+    	<view class="join-button">开始挑战</view>
+    </view>-->
+      </view>
+
+      <!--<view class="chongka">
+    <view class="block-box cwka">
+      <view class="cwka-con">
+        <view class="cwka-con-tl">重玩卡x0</view>
+        <view class="cwka-con-sm">邀请好友得免费重玩卡</view>
+      </view>
+      <view class="cwka-btn">
+        <view class="cwka-button" catchtap='goToUrl' data-url="share">点我邀请</view>
+      </view>
+    </view>
+  </view>-->
+      <view class="jj-menu flexbox">
+        <view class="jj-menu-item {{tap == 1 ? 'active' : ''}}" bindtap="changeTap" data-tap="1">今日排行榜</view>
+        <view class="jj-menu-item {{tap == 2 ? 'active' : ''}}" bindtap="changeTap" data-tap="2">上周排行榜</view>
+        <view class="jj-menu-item {{tap == 3 ? 'active' : ''}}" bindtap="changeTap" data-tap="3">总排行榜</view>
+      </view>
+      <view class="dati-paihang">
+        <!--<view class="paihang-tl"
+    ><text class="phb">上期排行榜</text><text class="dot">·</text>{{next.title||'20180306第5期'}}</view>
+    <view class="paihang-tl-sm">答得越快，得分越高</view>-->
+
+        <view class="mn-index">
+          <view class="nm-con" hidden='{{tap==1?false:true}}'>
+            <view class="mn-title">今日排行榜</view>
+            <view class="paihang-box-item clearfix" wx:for="{{scoreD}}">
+              <view class="paiming-num num-{{index+1}}">{{index+1}}</view>
+              <view class="paiming-persong clearfix">
+                 <image src="{{item.avatar}}" class="img"/>
+                <view class="paiming-persong-con">
+                  <view class="paiming-persong-name">{{item.nickname}}</view>
+                </view>
+              </view>
+              <view class="huode-price">{{item.score}}分</view>
+            </view>
+          </view>
+          <view class="nm-con" hidden='{{tap==2?false:true}}'>
+            <view class="mn-title">上周排行榜</view>
+            <view class="paihang-box-item clearfix" wx:for="{{scoreM}}">
+              <view class="paiming-num num-{{index+1}}">{{index+1}}</view>
+              <view class="paiming-persong clearfix">
+                <image src="{{item.avatar}}" class="img"/>
+                <view class="paiming-persong-con">
+                  <view class="paiming-persong-name">{{item.nickname}}</view>
+                </view>
+              </view>
+              <view class="huode-price">{{item.score}}分</view>
+            </view>
+          </view>
+
+          <view class="nm-con" hidden='{{tap==3?false:true}}'>
+            <view class="mn-title">总排行榜</view>
+            <view class="paihang-box-item clearfix" wx:for="{{scoreALL}}">
+              <view class="paiming-num num-{{index+1}}">{{index+1}}</view>
+              <view class="paiming-persong clearfix">
+                     <image src="{{item.avatar}}" class="img"/>
+                <view class="paiming-persong-con">
+                  <view class="paiming-persong-name">{{item.nickname}}</view>
+                </view>
+              </view>
+              <view class="huode-price">{{item.score}}分</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!--排行榜 end-->
+
+    <view class="line10"></view>
+    <view class="moregame-bb" wx:if="{{txtenabled==true}}">
+      <!--<view class="moregame-tl" wx:if="{{enabled==false}}">-->
+      <view class="moregame-yx">     
+        <view class="guize2048">数字方块规则</view>
+        <view class="guize-info">有16个格子，初始时会有两个格子上安放了两个数字2，每次可以选择上下左右其中一个方向去滑动，每滑动一次，所有的数字方块都会往滑动的方向靠拢外，系统也会在空白的地方随即出现一个数字方块，相同数字的方块在靠拢、相撞时会相加。 </view>
+      </view>
+      <view class="line10"></view>
+    </view>
+    <view class="moregame" wx:if="{{adsList.length>0}}">
+      <view class="moregame-main">
+        <view class="moregame-box" wx:for="{{adsList}}" wx:key="{{item.id}}">
+          <image src="{{item.picUrl}}" />
+          <view class="moregame-info">
+            <view class="moregame-info-tl">{{item.title}}</view>
+            <view class="moregame-info-sm">{{item.note}}</view>
+          </view>
+          <view class="moregame-button" data-id="{{item.id}}" data-appid="{{item.appId}}" data-linkurl="{{item.linkUrl}}" bindtap="detail">{{item.btnTitle}}</view>
+        </view>
+
+      </view>
+    </view>
+  </view>
+  <ad unit-id="adunit-2f14178f9c221e23"></ad>
+  <!--<button class="kf_button" open-type="contact" session-from="weapp">
+    <image class="kf_image" src="../../images/kf.png"></image> 
+</button>  -->
+</view>

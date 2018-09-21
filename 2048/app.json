@@ -1,0 +1,19 @@
+{
+  "pages":[
+    "pages/2048/2048",
+    "pages/index/index",
+    "pages/2048/rank"
+  ],
+  "window":{
+    "navigationBarBackgroundColor":"#FFFFFF",
+    "navigationBarTextStyle":"#FFFFFF",
+    "navigationBarTitleText": "",
+    "backgroundColor":"#FFFFFF",
+    "backgroundTextStyle":"white" 
+  }, 
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": false
+}

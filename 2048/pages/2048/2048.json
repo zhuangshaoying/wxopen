@@ -1,0 +1,7 @@
+{
+ "backgroundTextStyle": "white",
+"navigationBarBackgroundColor": "white",
+"navigationBarTitleText": "数字方块",
+"navigationBarTextStyle": "black",
+    "enablePullDownRefresh": false
+}
